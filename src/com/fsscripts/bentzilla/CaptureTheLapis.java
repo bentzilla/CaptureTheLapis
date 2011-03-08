@@ -113,10 +113,9 @@ public class CaptureTheLapis extends JavaPlugin {
             boolean hasPermission = this.mPermissions == null ? false : this.mPermissions.Security.permission(user, "ctl.gamemaster");
 
             if (!user.isOp() && !hasPermission) {
-                sender.sendMessage("You do not have permission to use this command (ctl.gamemaster).");
+                sender.sendMessage("You do not have permission to use this command.");
                 return true;
             }
-
 
             if (subCommand.equals("create")) {
                 if (args.length < 2) {
@@ -126,38 +125,23 @@ public class CaptureTheLapis extends JavaPlugin {
 
                 String gameName = args[1].toLowerCase();
                 Location spawnLocation = user.getLocation();
-                int areaSize = 64;
-                int durationHalf1 = 15;
-                int durationHalf2 = 15;
+                int length = 64;
+                int width = 64;
 
-                if (args.length > 2) {
+                if (args.length == 4) {
                     try {
-                        areaSize = Integer.parseInt(args[2]);
+                        length = Integer.parseInt(args[2]);
+                        width = Integer.parseInt(args[3]);
                     } catch (NumberFormatException e) {
                         ExplainCreateCommand(user);
                         return true;
                     }
-                }
-                if (args.length > 3) {
-                    try {
-                        durationHalf1 = Integer.parseInt(args[3]);
-                    } catch (NumberFormatException e) {
-                        ExplainCreateCommand(user);
-                        return true;
-                    }
-                }
-
-                if (args.length > 4) {
-                    try {
-                        durationHalf2 = Integer.parseInt(args[4]);
-                    } catch (NumberFormatException e) {
-                        ExplainCreateCommand(user);
-                        return true;
-                    }
+                } else {
+                	user.sendMessage("No length/width provided. Using default: 64x64");
                 }
 
                 ErrorMessage emsg = new ErrorMessage();
-                if (!this.getGameManager().CreateGame(gameName, user.getWorld(), spawnLocation, areaSize, durationHalf1, durationHalf2, emsg)) {
+                if (!this.getGameManager().CreateGame(gameName, user.getWorld(), spawnLocation, length, width, emsg)) {
                     user.sendMessage("Error: " + emsg.GetMessage());
                     return true;
                 } else {
@@ -166,15 +150,25 @@ public class CaptureTheLapis extends JavaPlugin {
                 }
 
             } else if (subCommand.equals("start")) {
-                if (args.length < 2) {
+                if (args.length != 3) {
                     ExplainStartCommand(user);
                     return true;
                 }
 
                 String gameName = args[1].toLowerCase();
-
+                int durationHalf1 = 15;
+                int durationHalf2 = 15;
+                
+                try {
+                	durationHalf1 = Integer.parseInt(args[2]);
+                	durationHalf2 = Integer.parseInt(args[3]);
+                } catch (NumberFormatException e) {
+                    ExplainCreateCommand(user);
+                    return true;
+                }
+                
                 ErrorMessage emsg = new ErrorMessage();
-                if (!this.getGameManager().StartGame(gameName, emsg)) {
+                if (!this.getGameManager().StartGame(gameName, emsg, durationHalf1, durationHalf2)) {
                     user.sendMessage("Error: " + emsg.GetMessage());
                     return true;
                 } else {
@@ -212,11 +206,11 @@ public class CaptureTheLapis extends JavaPlugin {
 
 
     private void ExplainCreateCommand(Player user) {
-        user.sendMessage("Usage: /ctl create <game-name> (area size) (duration 1st half) (duration 2nd half)");
+        user.sendMessage("Usage: /ctl create <game-name> (area length) (area width)");
     }
 
     private void ExplainStartCommand(Player user) {
-        user.sendMessage("Usage: /ctl start <game-name>");
+        user.sendMessage("Usage: /ctl start <game-name> (duration1sthalf) (duration2ndhalf)");
     }
 
     private void ExplainCancelCommand(Player user) {

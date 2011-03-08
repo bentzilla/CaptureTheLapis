@@ -35,7 +35,7 @@ public class GameManager
         return ret;
     }
 
-    public boolean CreateGame(String gameName, World world, Location spawnLocation, int areaSize, int durationHalf1, int durationHalf2, ErrorMessage ErrorMsg)
+    public boolean CreateGame(String gameName, World world, Location spawnLocation, int length, int width, ErrorMessage ErrorMsg)
     {
         // check if name already exists
         gameName = gameName.toLowerCase();
@@ -52,7 +52,7 @@ public class GameManager
         // check if game overlaps with another game
         for(Game g : this.activeGames)
         {
-           if(g.collidesWith(spawnLocation, areaSize))
+           if(g.collidesWith(spawnLocation, length, width))
            {
              ErrorMsg.SetMessage("Overlaps with another game.");
              return false;
@@ -60,7 +60,7 @@ public class GameManager
         }
         
         // create game class, add it to the list
-        Game newGame = new Game(parent, gameName, world, spawnLocation, areaSize, durationHalf1, durationHalf2);
+        Game newGame = new Game(parent, gameName, world, spawnLocation, length, width);
         this.activeGames.add(newGame);
 
         // draw game arena
@@ -69,7 +69,7 @@ public class GameManager
       return true;
     }
 
-    public boolean StartGame(String gameName, ErrorMessage ErrorMsg)
+    public boolean StartGame(String gameName, ErrorMessage ErrorMsg, int duration1, int duration2)
     {
         // check if name already exists
         gameName = gameName.toLowerCase();
@@ -90,7 +90,7 @@ public class GameManager
              return false;
         }
 
-        if(!game.start(ErrorMsg))
+        if(!game.start(ErrorMsg, duration1, duration2))
         {
            return false;
         }

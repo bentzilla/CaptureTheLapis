@@ -18,7 +18,8 @@ public class Game {
     }
     private String name;
     private Location spawnLocation;
-    private int areaSize;
+    private int length;
+    private int width;
     private Integer duration1;
     private Integer duration2;
     private CaptureTheLapis parent;
@@ -35,13 +36,12 @@ public class Game {
     private int maxZA, minZB;
     private ArrayList<String> dieTeleList;
 
-    public Game(CaptureTheLapis parent, String name, World world, Location spawnLocation, int areaSize, int duration1, int duration2) {
+    public Game(CaptureTheLapis parent, String name, World world, Location spawnLocation, int length, int width) {
         this.name = name;
         this.world = world;
         this.spawnLocation = spawnLocation;
-        this.areaSize = areaSize;
-        this.duration1 = duration1;
-        this.duration2 = duration2;
+        this.length = length;
+        this.width = width;
         this.parent = parent;
 
         this.teamA = new ArrayList<String>();
@@ -51,12 +51,12 @@ public class Game {
 
         this.backupObsWallHeight = null;
 
-        minX = spawnLocation.getBlockX() - this.areaSize;
-        maxX = spawnLocation.getBlockX() + this.areaSize;
-        minZ = spawnLocation.getBlockZ();
-        maxZ = spawnLocation.getBlockZ() + (4 * this.areaSize) + 2;
-        maxZA = minZ + (2 * this.areaSize) + 1;
-        minZB = maxZA + 1;
+        minX = spawnLocation.getBlockX() - this.width;
+        maxX = spawnLocation.getBlockX() + this.width;
+        minZ = spawnLocation.getBlockZ() - Math.round(this.length/2);
+        maxZ = spawnLocation.getBlockZ() + Math.round(this.length/2);
+        maxZA = minZ + Math.round(this.length/2);
+        minZB = maxZA + 1/* + 1*/;
 
         this.status = GameStatus.CREATED;
     }
@@ -110,12 +110,12 @@ public class Game {
         }
     }
 
-    public boolean collidesWith(Location cSpawnLocation, int cAreaSize) {
+    public boolean collidesWith(Location cSpawnLocation, int clength, int cwidth) {
 
-        int cminX = spawnLocation.getBlockX() - this.areaSize;
-        int cmaxX = spawnLocation.getBlockX() + this.areaSize;
-        int cminZ = spawnLocation.getBlockZ();
-        int cmaxZ = spawnLocation.getBlockZ() + (4 * this.areaSize) + 2;
+        int cminX = spawnLocation.getBlockX() - this.width;
+        int cmaxX = spawnLocation.getBlockX() + this.width;
+        int cminZ = spawnLocation.getBlockZ() - Math.round(this.length/2);
+        int cmaxZ = spawnLocation.getBlockZ() + Math.round(this.length/2);
 
         if (maxX < cminX | maxZ < cminZ) {
             return false;
@@ -214,12 +214,15 @@ public class Game {
         }
     }
 
-    public boolean start(ErrorMessage ErrorMsg) {
+    public boolean start(ErrorMessage ErrorMsg, int duration1, int duration2) {
 
         if (this.status != GameStatus.CREATED) {
             ErrorMsg.SetMessage("Game already started.");
             return false;
         }
+        
+        this.duration1 = duration1;
+        this.duration2 = duration2;
 
         // set teams
         teamA.clear();
