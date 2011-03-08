@@ -1,11 +1,11 @@
-package redecouverte.event.ctl;
+package com.fsscripts.bentzilla;
 
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.bukkit.Server;
 import org.bukkit.event.player.*;
-import redecouverte.event.ctl.GameManager.*;
+import com.fsscripts.bentzilla.GameManager.*;
 import org.bukkit.entity.*;
 import org.bukkit.Location;
 
@@ -25,7 +25,6 @@ public class EPlayerListener extends PlayerListener {
         this.allowedCommands.add("kit");
     }
 
-    @Override
     public void onPlayerCommand(PlayerChatEvent event) {
 
         try {

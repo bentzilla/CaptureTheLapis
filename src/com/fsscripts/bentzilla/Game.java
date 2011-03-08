@@ -1,4 +1,4 @@
-package redecouverte.event.ctl;
+package com.fsscripts.bentzilla;
 
 import java.util.ArrayList;
 import org.bukkit.entity.*;
@@ -669,7 +669,7 @@ public class Game {
 
     }
 
-    public boolean CheckDropIsMagicLapis(Player player, ItemDrop drop) {
+    public boolean CheckDropIsMagicLapis(Player player, Item drop) {
 
         if (this.status != GameStatus.HALF1 && this.status != GameStatus.HALF2) {
             return false;

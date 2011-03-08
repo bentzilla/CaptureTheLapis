@@ -1,14 +1,16 @@
 name: CaptureTheLapis
-main: redecouverte.event.ctl.CaptureTheLapis
+main: com.fsscripts.bentzilla.CaptureTheLapis
 version: 0.1
 website: http://forums.bukkit.org
 authors:
+  - bentzilla
+  - aarondawg
   - Redecouverte
 description: Capture the flag with a lapis lazuli block.
 commands:
   ctl:
     description: Main ctl command
     usage: |
-           /ctl create <name> <areaSize> <duration1stHalf> <duration2ndHalf>
-           /ctl start <name>
+           /ctl create <name> <length> <width>
+           /ctl start <name> <duration1sthalf> <duration2ndhalf>
            /ctl cancel <name>

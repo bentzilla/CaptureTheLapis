@@ -1,4 +1,4 @@
-package redecouverte.event.ctl;
+package com.fsscripts.bentzilla;
 
 
 public class ErrorMessage {

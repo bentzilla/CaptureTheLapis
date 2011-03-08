@@ -1,4 +1,4 @@
-package redecouverte.event.ctl;
+package com.fsscripts.bentzilla;
 
 import java.io.File;
 import org.bukkit.command.Command;
@@ -23,11 +23,6 @@ public class CaptureTheLapis extends JavaPlugin {
     private GameManager mGameManager;
     private Permissions mPermissions = null;
 
-    public CaptureTheLapis(PluginLoader pluginLoader, Server instance, PluginDescriptionFile desc, File folder, File plugin, ClassLoader cLoader) {
-
-        super(pluginLoader, instance, desc, folder, plugin, cLoader);
-    }
-
     public void onEnable() {
         try {
             setupPermissions();
@@ -37,7 +32,6 @@ public class CaptureTheLapis extends JavaPlugin {
             PluginManager pm = getServer().getPluginManager();
 
             mPlayerListener = new EPlayerListener(this);
-            pm.registerEvent(Type.PLAYER_COMMAND, mPlayerListener, Priority.Lowest, this);
             pm.registerEvent(Type.PLAYER_MOVE, mPlayerListener, Priority.Highest, this);
             pm.registerEvent(Type.PLAYER_QUIT, mPlayerListener, Priority.Monitor, this);
             pm.registerEvent(Type.PLAYER_JOIN, mPlayerListener, Priority.Monitor, this);

@@ -1,16 +1,16 @@
-package redecouverte.event.ctl;
+package com.fsscripts.bentzilla;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import org.bukkit.*;
-import org.bukkit.Location;
 import org.bukkit.block.*;
 import org.bukkit.event.block.*;
 import org.bukkit.event.entity.*;
 import org.bukkit.event.player.*;
 import org.bukkit.entity.*;
-import redecouverte.event.ctl.Game.CarriesLapis;
-import redecouverte.event.ctl.Game.GameStatus;
+
+import com.fsscripts.bentzilla.Game.CarriesLapis;
+import com.fsscripts.bentzilla.Game.GameStatus;
 
 public class GameManager
 {
@@ -231,7 +231,7 @@ public class GameManager
         return false;
     }
 
-    public boolean DropIsMagicLapis(Player player, ItemDrop drop)
+    public boolean DropIsMagicLapis(Player player, Item drop)
     {
         // if it is magic lapis, block it and spawn it at that location as block
         if(this.activeGames.size() < 1)

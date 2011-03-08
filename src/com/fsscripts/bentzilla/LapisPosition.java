@@ -1,4 +1,4 @@
-package redecouverte.event.ctl;
+package com.fsscripts.bentzilla;
 
 import java.util.ArrayList;
 import org.bukkit.entity.*;

@@ -1,4 +1,4 @@
-package redecouverte.event.ctl;
+package com.fsscripts.bentzilla;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
